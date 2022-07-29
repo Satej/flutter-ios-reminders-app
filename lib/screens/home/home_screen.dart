@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:ios_reminders/models/category_collection.dart';
+import 'package:ios_reminders/screens/home/list_view_items.dart';
 
 import '../../models/category.dart';
 import 'footer.dart';
 import 'grid_view_items.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  String layoutType = 'grid';
 
   CategoryCollection categoryCollection = CategoryCollection();
-
-  HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +26,15 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         actions: [
           TextButton(
-            onPressed: () {},
-            child: const Text(
-              'Edit',
-              style: TextStyle(color: Colors.white),
+            onPressed: () {
+              layoutType = layoutType == 'grid' ? 'list' : 'grid';
+              setState(() {
+                layoutType = layoutType;
+              });
+            },
+            child: Text(
+              layoutType == 'grid' ? 'Edit' : 'Done',
+              style: const TextStyle(color: Colors.white),
             ),
           )
         ],
@@ -28,7 +42,9 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: GridViewItems(categoryCollection: categoryCollection),
+            child: layoutType == 'grid'
+              ? GridViewItems(categories: categoryCollection.selectedCategories)
+              : ListViewItems(categoryCollection: categoryCollection),
           ),
           const Footer(),
         ],
