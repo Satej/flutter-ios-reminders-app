@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../common/widgets/category_icon.dart';
+import '../../common/widgets/category_icon.dart';
 import 'category.dart';
 
 class CategoryCollection {

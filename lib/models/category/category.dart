@@ -1,4 +1,4 @@
-import '../common/widgets/category_icon.dart';
+import '../../common/widgets/category_icon.dart';
 
 class Category {
   final String id;

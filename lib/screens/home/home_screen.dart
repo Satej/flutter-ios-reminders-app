@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ios_reminders/models/category_collection.dart';
-import 'package:ios_reminders/screens/home/list_view_items.dart';
+import 'package:ios_reminders/models/category/category_collection.dart';
+import 'package:ios_reminders/screens/home/widgets/list_view_items.dart';
 
-import '../../models/category.dart';
-import 'footer.dart';
-import 'grid_view_items.dart';
+import '../../models/category/category.dart';
+import 'widgets/footer.dart';
+import 'widgets/grid_view_items.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -40,11 +40,18 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            child: layoutType == 'grid'
-              ? GridViewItems(categories: categoryCollection.selectedCategories)
-              : ListViewItems(categoryCollection: categoryCollection),
+            child: AnimatedCrossFade(
+              duration: const Duration(milliseconds: 300),
+              crossFadeState: layoutType == 'grid'
+                ? CrossFadeState.showFirst
+                : CrossFadeState.showSecond,
+              firstChild: GridViewItems(categories: categoryCollection.selectedCategories),
+              secondChild: ListViewItems(categoryCollection: categoryCollection),
+            ),
           ),
           const Footer(),
         ],
