@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../models/category/category.dart';
-import '../../../models/category/category_collection.dart';
 
 class GridViewItems extends StatelessWidget {
   const GridViewItems({
@@ -36,10 +35,16 @@ class GridViewItems extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     category.icon,
-                    const Text('0'),
+                    Text(
+                      '0',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                   ],
                 ),
-                Text(category.name),
+                Text(
+                  category.name,
+                  style: Theme.of(context).textTheme.headline5,
+                ),
               ],
             ),
           ),

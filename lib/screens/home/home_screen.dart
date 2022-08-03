@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ios_reminders/models/category/category_collection.dart';
 import 'package:ios_reminders/screens/home/widgets/list_view_items.dart';
 
-import '../../models/category/category.dart';
 import 'widgets/footer.dart';
 import 'widgets/grid_view_items.dart';
 
@@ -34,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             child: Text(
               layoutType == 'grid' ? 'Edit' : 'Done',
-              style: const TextStyle(color: Colors.white),
+              //style: const TextStyle(color: Colors.white),
             ),
           )
         ],

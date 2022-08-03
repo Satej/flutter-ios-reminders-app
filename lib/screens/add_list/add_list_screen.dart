@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ios_reminders/models/common/custom_color_collection.dart';
 
+import '../../models/common/custom_color.dart';
+import '../../models/common/custom_icon.dart';
 import '../../models/common/custom_icon_collection.dart';
 
 class AddListScreen extends StatefulWidget {
@@ -11,6 +13,23 @@ class AddListScreen extends StatefulWidget {
 }
 
 class _AddListScreenState extends State<AddListScreen> {
+
+  CustomColor _selectedColor = CustomColorCollection().colors.first;
+  CustomIcon _selectedIcon = CustomIconCollection().icons.first;
+
+  TextEditingController _textController = TextEditingController();
+  String _listName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _textController.addListener(() {
+      setState(() {
+        _listName = _textController.text;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,20 +37,31 @@ class _AddListScreenState extends State<AddListScreen> {
         title: const Text('New List'),
         actions: [
           TextButton(
-            onPressed: () {},
-            child: const Text('Add'),
+            onPressed: _listName.isEmpty ? null : () {
+              if (_textController.text.isNotEmpty) {
+                print('add to database');
+              } else {
+                print('Please enter a list name');
+              }
+            },
+            child: const Text(
+              'Add',
+              style: TextStyle(
+                //color: _listName.isNotEmpty ? Colors.blueAccent : Colors.grey,
+              ),
+            ),
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
               padding: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.green),
-              child: const Icon(Icons.home, size: 75),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: _selectedColor.color),
+              child: Icon(_selectedIcon.icon, size: 75),
             ),
             const SizedBox(height: 20),
             Container(
@@ -41,17 +71,21 @@ class _AddListScreenState extends State<AddListScreen> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: TextField(
+                controller: _textController,
                 autofocus: true,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headline5,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  suffixIcon: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).primaryColor,
+                  suffixIcon: IconButton(
+                    onPressed: () => _textController.clear(),
+                    icon: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      child: const Icon(Icons.clear),
                     ),
-                    child: const Icon(Icons.clear),
                   ),
                 ),
               ),
@@ -62,12 +96,22 @@ class _AddListScreenState extends State<AddListScreen> {
               runSpacing: 10,
               children: [
                 for (final customColor in CustomColorCollection().colors)
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: customColor.color,
-                      shape: BoxShape.circle,
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedColor = customColor;
+                      });
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        border: _selectedColor.id == customColor.id
+                            ? Border.all(color: Colors.grey[600]!, width: 5)
+                            : null,
+                        color: customColor.color,
+                        shape: BoxShape.circle,
+                      ),
                     ),
                   )
               ],
@@ -78,14 +122,24 @@ class _AddListScreenState extends State<AddListScreen> {
               runSpacing: 10,
               children: [
                 for (final customIcon in CustomIconCollection().icons)
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      shape: BoxShape.circle,
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedIcon = customIcon;
+                      });
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        border: _selectedIcon.id == customIcon.id
+                          ? Border.all(color: Colors.grey[600]!, width: 5)
+                          : null,
+                        color: Theme.of(context).cardColor,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(customIcon.icon),
                     ),
-                    child: Icon(customIcon.icon),
                   )
               ],
             ),
