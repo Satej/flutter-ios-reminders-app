@@ -1,9 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:ios_reminders/screens/add_list/add_list_screen.dart';
 import 'package:ios_reminders/screens/home/home_screen.dart';
 
 void main() {
-  runApp(App());
+  runApp(const App());
 }
 
 class App extends StatelessWidget {
@@ -14,7 +15,8 @@ class App extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => HomeScreen(),
+        '/': (context) => const HomeScreen(),
+        '/addList': (context) => const AddListScreen(),
       },
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.black,
