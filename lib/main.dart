@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:ios_reminders/screens/add_list/add_list_screen.dart';
+import 'package:ios_reminders/screens/add_reminder/add_reminder_screen.dart';
 import 'package:ios_reminders/screens/home/home_screen.dart';
 
 void main() {
@@ -17,6 +18,7 @@ class App extends StatelessWidget {
       routes: {
         '/': (context) => const HomeScreen(),
         '/addList': (context) => const AddListScreen(),
+        '/addReminder': (context) => const AddReminderScreen(),
       },
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.black,
@@ -24,6 +26,7 @@ class App extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white,),
         accentColor: Colors.white,
         brightness: Brightness.dark,
+        dividerColor: Colors.grey[600],
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
             primary: Colors.blueAccent,
