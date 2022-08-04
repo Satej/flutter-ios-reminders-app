@@ -50,7 +50,7 @@ class _AddListScreenState extends State<AddListScreen> {
                 Navigator.pop(
                   context,
                   TodoList(
-                    id: '1',
+                    id: DateTime.now().toString(),
                     title: _textController.text,
                     icon: {
                       'id': _selectedIcon.id,
