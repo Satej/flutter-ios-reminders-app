@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ios_reminders/models/common/custom_color_collection.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/common/custom_color.dart';
 import '../../models/common/custom_icon.dart';
 import '../../models/common/custom_icon_collection.dart';
 import '../../models/todo_list/todo_list.dart';
+import '../../models/todo_list/todo_list_collection.dart';
 
 class AddListScreen extends StatefulWidget {
   const AddListScreen({Key? key}) : super(key: key);
@@ -47,8 +49,7 @@ class _AddListScreenState extends State<AddListScreen> {
             onPressed: _listName.isEmpty ? null : () {
               if (_textController.text.isNotEmpty) {
                 //print('add to database');
-                Navigator.pop(
-                  context,
+                Provider.of<TodoListCollection>(context, listen: false).addTodoList(
                   TodoList(
                     id: DateTime.now().toString(),
                     title: _textController.text,
@@ -58,6 +59,7 @@ class _AddListScreenState extends State<AddListScreen> {
                     },
                   ),
                 );
+                Navigator.pop(context);
               } else {
                 print('Please enter a list name');
               }
