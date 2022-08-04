@@ -40,19 +40,23 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          AnimatedCrossFade(
-            duration: const Duration(milliseconds: 300),
-            crossFadeState: layoutType == 'grid'
-              ? CrossFadeState.showFirst
-              : CrossFadeState.showSecond,
-            firstChild: GridViewItems(categories: categoryCollection.selectedCategories),
-            secondChild: ListViewItems(categoryCollection: categoryCollection),
-          ),
           Expanded(
-            child: TodoLists(),
+            child: ListView(
+              children: [
+                AnimatedCrossFade(
+                  duration: const Duration(milliseconds: 300),
+                  crossFadeState: layoutType == 'grid'
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
+                  firstChild: GridViewItems(categories: categoryCollection.selectedCategories),
+                  secondChild: ListViewItems(categoryCollection: categoryCollection),
+                ),
+                TodoLists(),
+              ],
+            ),
           ),
           Footer(),
         ],
