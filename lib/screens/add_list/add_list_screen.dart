@@ -4,6 +4,7 @@ import 'package:ios_reminders/models/common/custom_color_collection.dart';
 import '../../models/common/custom_color.dart';
 import '../../models/common/custom_icon.dart';
 import '../../models/common/custom_icon_collection.dart';
+import '../../models/todo_list/todo_list.dart';
 
 class AddListScreen extends StatefulWidget {
   const AddListScreen({Key? key}) : super(key: key);
@@ -45,7 +46,18 @@ class _AddListScreenState extends State<AddListScreen> {
           TextButton(
             onPressed: _listName.isEmpty ? null : () {
               if (_textController.text.isNotEmpty) {
-                print('add to database');
+                //print('add to database');
+                Navigator.pop(
+                  context,
+                  TodoList(
+                    id: '1',
+                    title: _textController.text,
+                    icon: {
+                      'id': _selectedIcon.id,
+                      'color': _selectedColor.id,
+                    },
+                  ),
+                );
               } else {
                 print('Please enter a list name');
               }
