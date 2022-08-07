@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ios_reminders/services/auth_service.dart';
 import 'package:lottie/lottie.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -74,9 +75,15 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     const SizedBox(height: 20,),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          print('submit form');
+                          final user = await AuthService().signInWithEmailAndPassword(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          );
+                          if (user != null) {
+
+                          }
                         }
                       },
                       child: const Text('Sign In'),

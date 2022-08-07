@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ios_reminders/services/auth_service.dart';
 import 'package:lottie/lottie.dart';
@@ -36,7 +35,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               widget.toggleView();
             },
             icon: const Icon(Icons.person),
-            label: const Text('Sign Up'),
+            label: const Text('Sign In'),
           ),
         ],
       ),

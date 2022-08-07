@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ios_reminders/models/category/category_collection.dart';
 import 'package:ios_reminders/screens/home/widgets/TodoLists.dart';
@@ -25,6 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
+          IconButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+            },
+            icon: const Icon(Icons.logout),
+          ),
           TextButton(
             onPressed: () {
               layoutType = layoutType == 'grid' ? 'list' : 'grid';
