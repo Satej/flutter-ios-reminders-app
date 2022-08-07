@@ -52,35 +52,36 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Form(
                 key: _formKey,
                 child: Column(
-                    children: [
-                      const SizedBox(height: 20,),
-                      TextFormField(
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(hintText: 'Enter email'),
-                        validator: (val) => val == null || !val.contains('@')
-                          ? 'Enter an email address'
-                          : null,
-                      ),
-                      const SizedBox(height: 20,),
-                      TextFormField(
-                        controller: _passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(hintText: 'Enter password'),
-                        validator: (val) => val!.length < 6
-                          ? 'Enter a password of at least 6 chars'
-                          : null,
-                      ),
-                      const SizedBox(height: 20,),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            print('submit form');
-                          }
-                        },
-                        child: const Text('Sign In'),
-                      )
-                    ],
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SizedBox(height: 20,),
+                    TextFormField(
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(hintText: 'Enter email'),
+                      validator: (val) => val == null || !val.contains('@')
+                        ? 'Enter an email address'
+                        : null,
+                    ),
+                    const SizedBox(height: 20,),
+                    TextFormField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(hintText: 'Enter password'),
+                      validator: (val) => val!.length < 6
+                        ? 'Enter a password of at least 6 chars'
+                        : null,
+                    ),
+                    const SizedBox(height: 20,),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          print('submit form');
+                        }
+                      },
+                      child: const Text('Sign In'),
+                    )
+                  ],
                 ),
               ),
             ),

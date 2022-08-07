@@ -57,6 +57,11 @@ class _AppState extends State<App> {
                 accentColor: Colors.white,
                 brightness: Brightness.dark,
                 dividerColor: Colors.grey[600],
+                elevatedButtonTheme: ElevatedButtonThemeData(
+                  style: ElevatedButton.styleFrom(
+                    shape: const StadiumBorder(),
+                  ),
+                ),
                 textButtonTheme: TextButtonThemeData(
                   style: TextButton.styleFrom(
                     primary: Colors.blueAccent,
