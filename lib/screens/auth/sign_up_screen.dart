@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ios_reminders/services/auth_service.dart';
 import 'package:lottie/lottie.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -73,9 +75,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     const SizedBox(height: 20,),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          print('submit form');
+                          final user = await AuthService().createUserWithEmailAndPassword(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          );
+                          if (user != null) {
+                            print('user');
+                          }
                         }
                       },
                       child: const Text('Sign Up'),
