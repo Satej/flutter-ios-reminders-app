@@ -5,16 +5,56 @@ import 'package:ios_reminders/screens/add_list/add_list_screen.dart';
 import 'package:ios_reminders/screens/add_reminder/add_reminder_screen.dart';
 import 'package:ios_reminders/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const App());
 }
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
 
   @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+
+  bool _initialized = false;
+  bool _error = false;
+
+  initializeFirebase() async {
+    try {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+      setState(() {
+        _initialized = true;
+      });
+    } catch(e) {
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initializeFirebase();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (_error) {
+      return const Center(child: Text('There was an error'));
+    }
+    if (!_initialized) {
+      return const Center(child: CircularProgressIndicator());
+    }
     return ChangeNotifierProvider<TodoListCollection>(
       create: (BuildContext context) => TodoListCollection(),
       child: MaterialApp(
