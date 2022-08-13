@@ -1,16 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/widgets/category_icon.dart';
 import '../../../models/common/custom_color_collection.dart';
 import '../../../models/common/custom_icon_collection.dart';
-import '../../../models/todo_list/todo_list_collection.dart';
+import '../../../models/todo_list/todo_list.dart';
 
 class TodoLists extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final todoLists = Provider.of<TodoListCollection>(context).todoLists;
+    final todoLists = Provider.of<List<TodoList>>(context);
+    final user = Provider.of<User?>(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.all(10),
@@ -37,9 +40,17 @@ class TodoLists extends StatelessWidget {
               itemCount: todoLists.length,
               itemBuilder: (context, index) {
                 return Dismissible(
-                  onDismissed: (direction) {
-                    Provider.of<TodoListCollection>(context, listen: false)
-                        .removeTodoList(todoLists[index]);
+                  onDismissed: (direction) async {
+                    final todoListRef = FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(user!.uid)
+                      .collection('todo_lists')
+                      .doc(todoLists[index].id);
+                    try {
+                      await todoListRef.delete();
+                    } catch (e) {
+                      print(e);
+                    }
                   },
                   key: UniqueKey(),
                   direction: DismissDirection.endToStart,
