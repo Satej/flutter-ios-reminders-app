@@ -77,7 +77,7 @@ class TodoLists extends StatelessWidget {
                             todoLists[index].icon['id'])).icon,
                       ),
                       trailing: Text(
-                        '0',
+                        todoLists[index].reminderCount.toString(),
                         style: Theme.of(context).textTheme.bodyText2!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
