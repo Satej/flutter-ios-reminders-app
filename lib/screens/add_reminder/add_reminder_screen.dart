@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ios_reminders/models/todo_list/todo_list.dart';
+import 'package:ios_reminders/screens/add_reminder/select_reminder_list_screen.dart';
+import 'package:provider/provider.dart';
 
 import '../../common/widgets/category_icon.dart';
 
@@ -15,6 +18,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
   final TextEditingController _notesTextController = TextEditingController();
 
   String _title = '';
+  TodoList? _selectedList;
 
   @override
   void initState() {
@@ -23,6 +27,12 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
       setState(() {
         _title = _titleTextController.text;
       });
+    });
+  }
+
+  _updateSelectedList(TodoList todoList) {
+    setState(() {
+      _selectedList = todoList;
     });
   }
 
@@ -35,6 +45,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _todoLists = Provider.of<List<TodoList>>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('New Reminder'),
@@ -102,21 +113,33 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
                 margin: EdgeInsets.zero,
                 child: ListTile(
                   tileColor: Theme.of(context).cardColor,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SelectReminderListScreen(
+                          todoLists: _todoLists,
+                          selectListCallback: _updateSelectedList,
+                          selectedList: _selectedList != null ? _selectedList! : _todoLists.first,
+                        ),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  },
                   leading: Text(
                     'List',
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      CategoryIcon(
+                    children: [
+                      const CategoryIcon(
                         bgColor: Colors.blueAccent,
                         iconData: Icons.calendar_today,
                       ),
-                      SizedBox(width: 10,),
-                      Text('New List'),
-                      Icon(Icons.arrow_forward_ios),
+                      const SizedBox(width: 10,),
+                      Text(_selectedList != null ? _selectedList!.title : _todoLists.first.title),
+                      const Icon(Icons.arrow_forward_ios),
                     ],
                   ),
                 ),
