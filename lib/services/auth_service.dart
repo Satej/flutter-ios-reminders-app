@@ -8,7 +8,8 @@ class AuthService {
     required String password,
   }) async {
     try {
-      final userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      final userCredential = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
       print(e.message);
@@ -21,7 +22,8 @@ class AuthService {
     required String password,
   }) async {
     try {
-      final userCredential = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      final userCredential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
       print(e.message);

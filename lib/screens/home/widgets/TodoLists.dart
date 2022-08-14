@@ -9,7 +9,6 @@ import '../../../models/common/custom_icon_collection.dart';
 import '../../../models/todo_list/todo_list.dart';
 
 class TodoLists extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final todoLists = Provider.of<List<TodoList>>(context);
@@ -27,7 +26,9 @@ class TodoLists extends StatelessWidget {
                 .headline6!
                 .copyWith(fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(
+            height: 10,
+          ),
           Container(
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
@@ -42,10 +43,10 @@ class TodoLists extends StatelessWidget {
                 return Dismissible(
                   onDismissed: (direction) async {
                     final todoListRef = FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(user!.uid)
-                      .collection('todo_lists')
-                      .doc(todoLists[index].id);
+                        .collection('users')
+                        .doc(user!.uid)
+                        .collection('todo_lists')
+                        .doc(todoLists[index].id);
                     try {
                       await todoListRef.delete();
                     } catch (e) {
@@ -69,20 +70,23 @@ class TodoLists extends StatelessWidget {
                     elevation: 0,
                     margin: EdgeInsets.zero,
                     child: ListTile(
+                      onTap: () {},
                       leading: CategoryIcon(
-                        bgColor: (CustomColorCollection().findColorById(
-                            todoLists[index].icon['color']).color
-                        ),
-                        iconData: (CustomIconCollection().findIconById(
-                            todoLists[index].icon['id'])).icon,
+                        bgColor: (CustomColorCollection()
+                            .findColorById(todoLists[index].icon['color'])
+                            .color),
+                        iconData: (CustomIconCollection()
+                                .findIconById(todoLists[index].icon['id']))
+                            .icon,
                       ),
                       trailing: Text(
                         todoLists[index].reminderCount.toString(),
                         style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
-                      title: Text(todoLists[index].title),),
+                      title: Text(todoLists[index].title),
+                    ),
                   ),
                 );
               },

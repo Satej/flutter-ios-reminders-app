@@ -17,7 +17,6 @@ class AddListScreen extends StatefulWidget {
 }
 
 class _AddListScreenState extends State<AddListScreen> {
-
   CustomColor _selectedColor = CustomColorCollection().colors.first;
   CustomIcon _selectedIcon = CustomIconCollection().icons.first;
 
@@ -47,48 +46,53 @@ class _AddListScreenState extends State<AddListScreen> {
         title: const Text('New List'),
         actions: [
           TextButton(
-            onPressed: _listName.isEmpty ? null : () async {
-              if (_textController.text.isNotEmpty) {
-                final user = Provider.of<User?>(context, listen: false);
+            onPressed: _listName.isEmpty
+                ? null
+                : () async {
+                    if (_textController.text.isNotEmpty) {
+                      final user = Provider.of<User?>(context, listen: false);
 
-                final todoListRef = FirebaseFirestore.instance.collection('users')
-                  .doc(user?.uid).collection('todo_lists').doc();
-                final newTodoList = TodoList(
-                  id: todoListRef.id,
-                  title: _textController.text,
-                  icon: {
-                    'id': _selectedIcon.id,
-                    'color': _selectedColor.id,
+                      final todoListRef = FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(user?.uid)
+                          .collection('todo_lists')
+                          .doc();
+                      final newTodoList = TodoList(
+                        id: todoListRef.id,
+                        title: _textController.text,
+                        icon: {
+                          'id': _selectedIcon.id,
+                          'color': _selectedColor.id,
+                        },
+                        reminderCount: 0,
+                      );
+
+                      try {
+                        await todoListRef.set(newTodoList.toJson());
+                      } catch (e) {
+                        print(e);
+                      }
+                      //print('add to database');
+                      //Provider.of<TodoListCollection>(context, listen: false).addTodoList(
+                      //  TodoList(
+                      //    id: DateTime.now().toString(),
+                      //    title: _textController.text,
+                      //    icon: {
+                      //      'id': _selectedIcon.id,
+                      //      'color': _selectedColor.id,
+                      //    },
+                      //  ),
+                      //);
+                      Navigator.pop(context);
+                    } else {
+                      print('Please enter a list name');
+                    }
                   },
-                  reminderCount: 0,
-                );
-
-                try {
-                  await todoListRef.set(newTodoList.toJson());
-                } catch (e) {
-                  print(e);
-                }
-                //print('add to database');
-                //Provider.of<TodoListCollection>(context, listen: false).addTodoList(
-                //  TodoList(
-                //    id: DateTime.now().toString(),
-                //    title: _textController.text,
-                //    icon: {
-                //      'id': _selectedIcon.id,
-                //      'color': _selectedColor.id,
-                //    },
-                //  ),
-                //);
-                Navigator.pop(context);
-              } else {
-                print('Please enter a list name');
-              }
-            },
             child: const Text(
               'Add',
               style: TextStyle(
-                //color: _listName.isNotEmpty ? Colors.blueAccent : Colors.grey,
-              ),
+                  //color: _listName.isNotEmpty ? Colors.blueAccent : Colors.grey,
+                  ),
             ),
           ),
         ],
@@ -100,7 +104,8 @@ class _AddListScreenState extends State<AddListScreen> {
           children: [
             Container(
               padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(shape: BoxShape.circle, color: _selectedColor.color),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color: _selectedColor.color),
               child: Icon(_selectedIcon.icon, size: 75),
             ),
             const SizedBox(height: 20),
@@ -130,7 +135,9 @@ class _AddListScreenState extends State<AddListScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Wrap(
               spacing: 10,
               runSpacing: 10,
@@ -173,8 +180,8 @@ class _AddListScreenState extends State<AddListScreen> {
                       width: 50,
                       decoration: BoxDecoration(
                         border: _selectedIcon.id == customIcon.id
-                          ? Border.all(color: Colors.grey[600]!, width: 5)
-                          : null,
+                            ? Border.all(color: Colors.grey[600]!, width: 5)
+                            : null,
                         color: Theme.of(context).cardColor,
                         shape: BoxShape.circle,
                       ),

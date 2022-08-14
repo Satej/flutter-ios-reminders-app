@@ -21,7 +21,6 @@ class AddReminderScreen extends StatefulWidget {
 }
 
 class _AddReminderScreenState extends State<AddReminderScreen> {
-
   final TextEditingController _titleTextController = TextEditingController();
   final TextEditingController _notesTextController = TextEditingController();
 
@@ -68,55 +67,55 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
         title: const Text('New Reminder'),
         actions: [
           TextButton(
-            onPressed: _title.isEmpty || _selectedDate == null || _selectedTime == null
-              ? null
-              : () async {
-                  print('add to database');
-                  _selectedList ??= _todoLists.first;
-                  final user = Provider.of<User?>(context, listen: false);
-                  var reminderRef = FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(user?.uid)
-                    .collection('reminders')
-                    .doc();
-                  var newReminder = Reminder(
-                    id: reminderRef.id,
-                    title: _titleTextController.text,
-                    categoryId: _selectedCategory.id,
-                    dueDate: _selectedDate!.millisecondsSinceEpoch,
-                    dueTime: {
-                      'hour': _selectedTime!.hour,
-                      'minute': _selectedTime!.minute,
-                    },
-                    notes: _notesTextController.text,
-                    list: _selectedList!.toJson(),
-                  );
+            onPressed: _title.isEmpty ||
+                    _selectedDate == null ||
+                    _selectedTime == null
+                ? null
+                : () async {
+                    print('add to database');
+                    _selectedList ??= _todoLists.first;
+                    final user = Provider.of<User?>(context, listen: false);
+                    var reminderRef = FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(user?.uid)
+                        .collection('reminders')
+                        .doc();
+                    var newReminder = Reminder(
+                      id: reminderRef.id,
+                      title: _titleTextController.text,
+                      categoryId: _selectedCategory.id,
+                      dueDate: _selectedDate!.millisecondsSinceEpoch,
+                      dueTime: {
+                        'hour': _selectedTime!.hour,
+                        'minute': _selectedTime!.minute,
+                      },
+                      notes: _notesTextController.text,
+                      list: _selectedList!.toJson(),
+                    );
 
-                  final listRef = FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(user?.uid)
-                    .collection('todo_lists')
-                    .doc(_selectedList!.id);
+                    final listRef = FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(user?.uid)
+                        .collection('todo_lists')
+                        .doc(_selectedList!.id);
 
-                  WriteBatch batch = FirebaseFirestore.instance.batch();
-                  batch.set(reminderRef, newReminder.toJson());
-                  batch.update(
-                    listRef,
-                    { 'reminder_count': _selectedList!.reminderCount + 1 }
-                  );
+                    WriteBatch batch = FirebaseFirestore.instance.batch();
+                    batch.set(reminderRef, newReminder.toJson());
+                    batch.update(listRef,
+                        {'reminder_count': _selectedList!.reminderCount + 1});
 
-                  try {
-                    await batch.commit();
-                    Navigator.pop(context);
-                  } catch (e) {
-                    print(e);
-                  }
-                },
+                    try {
+                      await batch.commit();
+                      Navigator.pop(context);
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
             child: const Text(
               'Add',
               style: TextStyle(
-                //color: _listName.isNotEmpty ? Colors.blueAccent : Colors.grey,
-              ),
+                  //color: _listName.isNotEmpty ? Colors.blueAccent : Colors.grey,
+                  ),
             ),
           ),
         ],
@@ -158,7 +157,9 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             Container(
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
@@ -176,7 +177,9 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
                         builder: (context) => SelectReminderListScreen(
                           todoLists: _todoLists,
                           selectListCallback: _updateSelectedList,
-                          selectedList: _selectedList != null ? _selectedList! : _todoLists.first,
+                          selectedList: _selectedList != null
+                              ? _selectedList!
+                              : _todoLists.first,
                         ),
                         fullscreenDialog: true,
                       ),
@@ -193,15 +196,21 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
                         bgColor: Colors.blueAccent,
                         iconData: Icons.calendar_today,
                       ),
-                      const SizedBox(width: 10,),
-                      Text(_selectedList != null ? _selectedList!.title : _todoLists.first.title),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(_selectedList != null
+                          ? _selectedList!.title
+                          : _todoLists.first.title),
                       const Icon(Icons.arrow_forward_ios),
                     ],
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             Container(
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
@@ -216,11 +225,10 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                          SelectReminderCategoryScreen(
-                            selectedCategory: _selectedCategory,
-                            selectCategoryCallback: _updateSelectedCategory,
-                          ),
+                        builder: (context) => SelectReminderCategoryScreen(
+                          selectedCategory: _selectedCategory,
+                          selectCategoryCallback: _updateSelectedCategory,
+                        ),
                         fullscreenDialog: true,
                       ),
                     );
@@ -232,11 +240,13 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                       CategoryIcon(
+                      CategoryIcon(
                         bgColor: _selectedCategory.icon.bgColor,
                         iconData: _selectedCategory.icon.iconData,
                       ),
-                      const SizedBox(width: 10,),
+                      const SizedBox(
+                        width: 10,
+                      ),
                       Text(_selectedCategory.name),
                       const Icon(Icons.arrow_forward_ios),
                     ],
@@ -244,7 +254,9 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             Container(
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
@@ -282,19 +294,21 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
                         bgColor: Colors.red.shade300,
                         iconData: CupertinoIcons.calendar_badge_plus,
                       ),
-                      const SizedBox(width: 10,),
-                      Text(
-                        _selectedDate != null
-                          ? DateFormat.yMMMd().format(_selectedDate!).toString()
-                          : 'Select Date'
+                      const SizedBox(
+                        width: 10,
                       ),
+                      Text(_selectedDate != null
+                          ? DateFormat.yMMMd().format(_selectedDate!).toString()
+                          : 'Select Date'),
                       const Icon(Icons.arrow_forward_ios),
                     ],
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             Container(
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
@@ -330,12 +344,12 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
                         bgColor: Colors.red.shade300,
                         iconData: CupertinoIcons.time,
                       ),
-                      const SizedBox(width: 10,),
-                      Text(
-                        _selectedTime != null
-                          ? _selectedTime!.format(context).toString()
-                          : 'Select Time'
+                      const SizedBox(
+                        width: 10,
                       ),
+                      Text(_selectedTime != null
+                          ? _selectedTime!.format(context).toString()
+                          : 'Select Time'),
                       const Icon(Icons.arrow_forward_ios),
                     ],
                   ),

@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,33 +17,36 @@ class Wrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final user = Provider.of<User?>(context);
     final todoListStream = FirebaseFirestore.instance
-      .collection('users')
-      .doc(user!.uid)
-      .collection('todo_lists')
-      .snapshots()
-      .map(
-        (snapshot) => snapshot.docs.map(
-          (todoListSnapshot) => TodoList.fromJson(
-            todoListSnapshot.data(),
-          ),
-        ).toList(),
-      );
+        .collection('users')
+        .doc(user!.uid)
+        .collection('todo_lists')
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.docs
+              .map(
+                (todoListSnapshot) => TodoList.fromJson(
+                  todoListSnapshot.data(),
+                ),
+              )
+              .toList(),
+        );
 
     final remindersStream = FirebaseFirestore.instance
-      .collection('users')
-      .doc(user.uid)
-      .collection('reminders')
-      .snapshots()
-      .map(
-        (snapshot) => snapshot.docs.map(
-          (reminderSnapshot) => Reminder.fromJson(
-            reminderSnapshot.data(),
-          ),
-        ).toList(),
-      );
+        .collection('users')
+        .doc(user.uid)
+        .collection('reminders')
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.docs
+              .map(
+                (reminderSnapshot) => Reminder.fromJson(
+                  reminderSnapshot.data(),
+                ),
+              )
+              .toList(),
+        );
 
     return MultiProvider(
       providers: [
@@ -67,7 +69,9 @@ class Wrapper extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.black,
           appBarTheme: const AppBarTheme(color: Colors.black),
-          iconTheme: const IconThemeData(color: Colors.white,),
+          iconTheme: const IconThemeData(
+            color: Colors.white,
+          ),
           accentColor: Colors.white,
           brightness: Brightness.dark,
           dividerColor: Colors.grey[600],

@@ -26,50 +26,54 @@ class GridViewItems extends StatelessWidget {
       children: categories
           .map(
             (category) => InkWell(
-              onTap: getCategoryCount(id: category.id, allReminders: allReminders) > 0
-                ? () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) =>
-                        ViewListByCategoryScreen(category: category,)
-                      ),
-                    );
-                  }
-                : null,
+              onTap: getCategoryCount(
+                          id: category.id, allReminders: allReminders) >
+                      0
+                  ? () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ViewListByCategoryScreen(
+                                  category: category,
+                                )),
+                      );
+                    }
+                  : null,
               child: Ink(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xFF1A191D),
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color(0xFF1A191D),
                 ),
                 child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            category.icon,
-                            Text(
-                              getCategoryCount(
-                                id: category.id,
-                                allReminders: allReminders,
-                              ).toString(),
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                          ],
-                        ),
-                        Text(
-                          category.name,
-                          style: Theme.of(context).textTheme.headline5,
-                        ),
-                      ],
-                    ),
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          category.icon,
+                          Text(
+                            getCategoryCount(
+                              id: category.id,
+                              allReminders: allReminders,
+                            ).toString(),
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+                        ],
+                      ),
+                      Text(
+                        category.name,
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-      ).toList(),
+          )
+          .toList(),
     );
   }
 
@@ -78,7 +82,8 @@ class GridViewItems extends StatelessWidget {
       return allReminders.length;
     }
 
-    final categories = allReminders?.where((reminder) => reminder.categoryId == id);
+    final categories =
+        allReminders?.where((reminder) => reminder.categoryId == id);
     return categories != null ? categories.length : 0;
   }
 }

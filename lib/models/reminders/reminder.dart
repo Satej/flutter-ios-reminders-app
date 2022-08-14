@@ -17,22 +17,22 @@ class Reminder {
     required this.dueTime,
   });
 
-  Reminder.fromJson(Map<String, dynamic> json):
-    id = json['id'],
-    title = json['title'],
-    categoryId = json['category_id'],
-    notes = json['notes'],
-    list = json['list'],
-    dueDate = json['due_date'],
-    dueTime = json['due_time'];
+  Reminder.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        title = json['title'],
+        categoryId = json['category_id'],
+        notes = json['notes'],
+        list = json['list'],
+        dueDate = json['due_date'],
+        dueTime = json['due_time'];
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'title': title,
-    'category_id': categoryId,
-    'notes': notes,
-    'list': list,
-    'due_date': dueDate,
-    'due_time': dueTime
-  };
+        'id': id,
+        'title': title,
+        'category_id': categoryId,
+        'notes': notes,
+        'list': list,
+        'due_date': dueDate,
+        'due_time': dueTime
+      };
 }

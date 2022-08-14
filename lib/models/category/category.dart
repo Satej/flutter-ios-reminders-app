@@ -6,12 +6,11 @@ class Category {
   bool isChecked;
   final CategoryIcon icon;
 
-  Category({
-    required this.icon,
-    required this.id,
-    required this.name,
-    this.isChecked = true
-  });
+  Category(
+      {required this.icon,
+      required this.id,
+      required this.name,
+      this.isChecked = true});
 
   void toggleCheckbox() {
     isChecked = !isChecked;

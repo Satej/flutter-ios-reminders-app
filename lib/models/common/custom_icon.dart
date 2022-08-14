@@ -4,5 +4,5 @@ class CustomIcon {
   String id;
   IconData icon;
 
-  CustomIcon({ required this.icon, required this.id });
+  CustomIcon({required this.icon, required this.id});
 }

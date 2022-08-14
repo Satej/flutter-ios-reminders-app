@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import '../../../models/todo_list/todo_list.dart';
 
 class Footer extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final todoLists = Provider.of<List<TodoList>>(context);
@@ -16,15 +15,17 @@ class Footer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           TextButton.icon(
-            onPressed: todoLists.isNotEmpty ? () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AddReminderScreen(),
-                  fullscreenDialog: true,
-                ),
-              );
-            } : null,
+            onPressed: todoLists.isNotEmpty
+                ? () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddReminderScreen(),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  }
+                : null,
             icon: const Icon(Icons.add_circle),
             label: const Text('New Reminder'),
           ),

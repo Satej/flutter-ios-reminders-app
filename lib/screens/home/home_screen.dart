@@ -8,7 +8,6 @@ import 'widgets/footer.dart';
 import 'widgets/grid_view_items.dart';
 
 class HomeScreen extends StatefulWidget {
-
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -16,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   String layoutType = 'grid';
 
   CategoryCollection categoryCollection = CategoryCollection();
@@ -58,8 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossFadeState: layoutType == 'grid'
                       ? CrossFadeState.showFirst
                       : CrossFadeState.showSecond,
-                  firstChild: GridViewItems(categories: categoryCollection.selectedCategories),
-                  secondChild: ListViewItems(categoryCollection: categoryCollection),
+                  firstChild: GridViewItems(
+                      categories: categoryCollection.selectedCategories),
+                  secondChild:
+                      ListViewItems(categoryCollection: categoryCollection),
                 ),
                 TodoLists(),
               ],

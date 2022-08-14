@@ -10,7 +10,6 @@ class AuthenticateScreen extends StatefulWidget {
 }
 
 class _AuthenticateScreenState extends State<AuthenticateScreen> {
-
   bool _showSignInScreen = true;
 
   void toggleView() {
@@ -22,10 +21,12 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: Duration(milliseconds: 300,),
+      duration: Duration(
+        milliseconds: 300,
+      ),
       child: _showSignInScreen
-        ? SignInScreen(toggleView: toggleView)
-        : SignUpScreen(toggleView: toggleView),
+          ? SignInScreen(toggleView: toggleView)
+          : SignUpScreen(toggleView: toggleView),
     );
   }
 }

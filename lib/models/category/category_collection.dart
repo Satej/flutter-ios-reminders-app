@@ -14,8 +14,7 @@ class CategoryCollection {
         icon: const CategoryIcon(
           bgColor: CupertinoColors.systemBlue,
           iconData: CupertinoIcons.calendar_today,
-        )
-    ),
+        )),
     Category(
       id: 'scheduled',
       name: 'Scheduled',
@@ -42,7 +41,8 @@ class CategoryCollection {
     ),
   ];
 
-  UnmodifiableListView<Category> get categories => UnmodifiableListView(_categories);
+  UnmodifiableListView<Category> get categories =>
+      UnmodifiableListView(_categories);
 
   Category removeItem(index) {
     return _categories.removeAt(index);

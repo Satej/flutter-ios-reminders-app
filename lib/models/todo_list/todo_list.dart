@@ -12,11 +12,11 @@ class TodoList {
   });
 
   Map<String, dynamic> toJson() =>
-    {'id': id, 'title': title, 'icon': icon, 'reminder_count': reminderCount};
+      {'id': id, 'title': title, 'icon': icon, 'reminder_count': reminderCount};
 
   TodoList.fromJson(Map<String, dynamic> json)
-    : id = json['id'],
-      title = json['title'],
-      icon = json['icon'],
-      reminderCount = json['reminder_count'];
+      : id = json['id'],
+        title = json['title'],
+        icon = json['icon'],
+        reminderCount = json['reminder_count'];
 }

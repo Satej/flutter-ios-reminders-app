@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '387656492796',
     projectId: 'flutter-93dfe',
     storageBucket: 'flutter-93dfe.appspot.com',
-    iosClientId: '387656492796-ovr8virsspd00nhtk5ejer2g6p5ndjul.apps.googleusercontent.com',
+    iosClientId:
+        '387656492796-ovr8virsspd00nhtk5ejer2g6p5ndjul.apps.googleusercontent.com',
     iosBundleId: 'com.example.iosReminders',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '387656492796',
     projectId: 'flutter-93dfe',
     storageBucket: 'flutter-93dfe.appspot.com',
-    iosClientId: '387656492796-ovr8virsspd00nhtk5ejer2g6p5ndjul.apps.googleusercontent.com',
+    iosClientId:
+        '387656492796-ovr8virsspd00nhtk5ejer2g6p5ndjul.apps.googleusercontent.com',
     iosBundleId: 'com.example.iosReminders',
   );
 }

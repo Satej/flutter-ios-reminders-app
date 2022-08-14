@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ios_reminders/screens/wrapper.dart';
@@ -18,7 +17,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   @override
@@ -33,7 +31,9 @@ class _AppState extends State<App> {
       future: _initialization,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return const Center(child: Text('There was an error'),);
+          return const Center(
+            child: Text('There was an error'),
+          );
         }
 
         if (snapshot.connectionState == ConnectionState.done) {

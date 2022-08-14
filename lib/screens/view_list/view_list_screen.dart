@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/category/category.dart';
 import '../../models/reminders/reminder.dart';
+import '../../models/todo_list/todo_list.dart';
 
-class ViewListByCategoryScreen extends StatelessWidget {
-  final Category category;
+class ViewListScreen extends StatelessWidget {
+  final TodoList todoList;
 
-  const ViewListByCategoryScreen({Key? key, required this.category})
-      : super(key: key);
+  const ViewListScreen({Key? key, required this.todoList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final allReminders = Provider.of<List<Reminder>>(context);
-    final remindersForCategory = allReminders
-        .where((reminder) =>
-            reminder.categoryId == category.id || category.id == 'all')
+    final reminderForList = allReminders
+        .where((reminder) => reminder.list['id'] == todoList.id)
         .toList();
     return Scaffold(
       appBar: AppBar(
-        title: Text(category.id),
+        title: Text(todoList.title),
       ),
       body: ListView.builder(
-        itemCount: remindersForCategory.length,
+        itemCount: reminderForList.length,
         itemBuilder: (context, index) {
-          final reminder = remindersForCategory[index];
+          final reminder = reminderForList[index];
           return Card(
             child: ListTile(
               title: Text(reminder.title),

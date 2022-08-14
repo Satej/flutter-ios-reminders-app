@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CategoryIcon extends StatelessWidget {
-
   final dynamic bgColor;
   final IconData iconData;
 
-  const CategoryIcon({ required this.bgColor, required this.iconData });
+  const CategoryIcon({required this.bgColor, required this.iconData});
 
   @override
   Widget build(BuildContext context) {

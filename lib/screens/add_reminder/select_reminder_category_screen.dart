@@ -4,7 +4,6 @@ import 'package:ios_reminders/models/category/category_collection.dart';
 import '../../models/category/category.dart';
 
 class SelectReminderCategoryScreen extends StatelessWidget {
-
   final Category selectedCategory;
   final Function(Category) selectCategoryCallback;
 
@@ -36,8 +35,8 @@ class SelectReminderCategoryScreen extends StatelessWidget {
             },
             title: Text(item.name),
             trailing: item.name == selectedCategory.name
-              ? const Icon(Icons.check)
-              : null,
+                ? const Icon(Icons.check)
+                : null,
           );
         },
       ),

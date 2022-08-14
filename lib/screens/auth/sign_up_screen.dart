@@ -3,7 +3,6 @@ import 'package:ios_reminders/services/auth_service.dart';
 import 'package:lottie/lottie.dart';
 
 class SignUpScreen extends StatefulWidget {
-
   final VoidCallback toggleView;
 
   const SignUpScreen({Key? key, required this.toggleView}) : super(key: key);
@@ -54,29 +53,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(hintText: 'Enter email'),
+                      decoration:
+                          const InputDecoration(hintText: 'Enter email'),
                       validator: (val) => val == null || !val.contains('@')
                           ? 'Enter an email address'
                           : null,
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     TextFormField(
                       controller: _passwordController,
                       obscureText: true,
-                      decoration: const InputDecoration(hintText: 'Enter password'),
+                      decoration:
+                          const InputDecoration(hintText: 'Enter password'),
                       validator: (val) => val!.length < 6
                           ? 'Enter a password of at least 6 chars'
                           : null,
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          final user = await AuthService().createUserWithEmailAndPassword(
+                          final user = await AuthService()
+                              .createUserWithEmailAndPassword(
                             email: _emailController.text,
                             password: _passwordController.text,
                           );

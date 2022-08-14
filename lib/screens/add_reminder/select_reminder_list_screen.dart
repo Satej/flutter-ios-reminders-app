@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../models/todo_list/todo_list.dart';
 
 class SelectReminderListScreen extends StatelessWidget {
-
   final List<TodoList> todoLists;
   final TodoList selectedList;
   final Function(TodoList) selectListCallback;
@@ -31,7 +30,9 @@ class SelectReminderListScreen extends StatelessWidget {
               Navigator.pop(context);
             },
             title: Text(item.title),
-            trailing: item.title == selectedList.title ? const Icon(Icons.check) : null,
+            trailing: item.title == selectedList.title
+                ? const Icon(Icons.check)
+                : null,
           );
         },
       ),
