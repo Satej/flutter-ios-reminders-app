@@ -43,13 +43,29 @@ class TodoLists extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Dismissible(
                   onDismissed: (direction) async {
+                    WriteBatch batch = FirebaseFirestore.instance.batch();
+
                     final todoListRef = FirebaseFirestore.instance
                         .collection('users')
-                        .doc(user!.uid)
+                        .doc(user?.uid)
                         .collection('todo_lists')
                         .doc(todoLists[index].id);
+
+                    final reminderSnapshots = await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(user?.uid)
+                        .collection('reminders')
+                        .where('list.id', isEqualTo: todoLists[index].id)
+                        .get();
+
+                    for (var reminder in reminderSnapshots.docs) {
+                      batch.delete(reminder.reference);
+                    }
+
+                    batch.delete(todoListRef);
+
                     try {
-                      await todoListRef.delete();
+                      await batch.commit();
                     } catch (e) {
                       print(e);
                     }
