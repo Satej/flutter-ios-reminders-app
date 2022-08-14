@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ios_reminders/screens/view_list/view_list_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/widgets/category_icon.dart';
@@ -70,7 +71,18 @@ class TodoLists extends StatelessWidget {
                     elevation: 0,
                     margin: EdgeInsets.zero,
                     child: ListTile(
-                      onTap: () {},
+                      onTap: todoLists[index].reminderCount > 0
+                          ? () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ViewListScreen(
+                                    todoList: todoLists[index],
+                                  ),
+                                ),
+                              );
+                            }
+                          : null,
                       leading: CategoryIcon(
                         bgColor: (CustomColorCollection()
                             .findColorById(todoLists[index].icon['color'])
