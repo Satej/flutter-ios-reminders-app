@@ -7,11 +7,12 @@ class Reminder {
   final int dueDate;
   final Map<String, dynamic> dueTime;
 
-  Reminder(this.categoryId, {
+  Reminder({
     required this.id,
     required this.title,
     this.notes,
     required this.list,
+    required this.categoryId,
     required this.dueDate,
     required this.dueTime,
   });
