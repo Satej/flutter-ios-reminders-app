@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ios_reminders/models/category/category_collection.dart';
 import 'package:ios_reminders/models/todo_list/todo_list.dart';
 import 'package:ios_reminders/screens/add_reminder/select_reminder_category_screen.dart';
@@ -23,6 +25,8 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
   String _title = '';
   TodoList? _selectedList;
   Category _selectedCategory = CategoryCollection().categories[0];
+  DateTime? _selectedDate;
+  TimeOfDay? _selectedTime;
 
   @override
   void initState() {
@@ -192,6 +196,104 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
                       ),
                       const SizedBox(width: 10,),
                       Text(_selectedCategory.name),
+                      const Icon(Icons.arrow_forward_ios),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20,),
+            Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Card(
+                elevation: 0,
+                margin: EdgeInsets.zero,
+                child: ListTile(
+                  tileColor: Theme.of(context).cardColor,
+                  onTap: () async {
+                    final DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.now().add(const Duration(days: 365)),
+                    );
+                    if (pickedDate != null) {
+                      print(pickedDate);
+                      setState(() {
+                        _selectedDate = pickedDate;
+                      });
+                    } else {
+                      print('no date was picked');
+                    }
+                  },
+                  leading: Text(
+                    'Date',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CategoryIcon(
+                        bgColor: Colors.red.shade300,
+                        iconData: CupertinoIcons.calendar_badge_plus,
+                      ),
+                      const SizedBox(width: 10,),
+                      Text(
+                        _selectedDate != null
+                          ? DateFormat.yMMMd().format(_selectedDate!).toString()
+                          : 'Select Date'
+                      ),
+                      const Icon(Icons.arrow_forward_ios),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20,),
+            Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Card(
+                elevation: 0,
+                margin: EdgeInsets.zero,
+                child: ListTile(
+                  tileColor: Theme.of(context).cardColor,
+                  onTap: () async {
+                    final TimeOfDay? pickedTime = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay.now(),
+                    );
+                    if (pickedTime != null) {
+                      print(pickedTime);
+                      setState(() {
+                        _selectedTime = pickedTime;
+                      });
+                    } else {
+                      print('no time was selected');
+                    }
+                  },
+                  leading: Text(
+                    'Time',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CategoryIcon(
+                        bgColor: Colors.red.shade300,
+                        iconData: CupertinoIcons.time,
+                      ),
+                      const SizedBox(width: 10,),
+                      Text(
+                        _selectedTime != null
+                          ? _selectedTime!.format(context).toString()
+                          : 'Select Time'
+                      ),
                       const Icon(Icons.arrow_forward_ios),
                     ],
                   ),
