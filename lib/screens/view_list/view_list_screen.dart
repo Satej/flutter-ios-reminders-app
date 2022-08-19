@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ios_reminders/common/widgets/dismissible_background.dart';
 import 'package:ios_reminders/models/common/helpers/helpers.dart' as helpers;
+import 'package:ios_reminders/services/database_service.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/reminders/reminder.dart';
@@ -34,30 +34,10 @@ class ViewListScreen extends StatelessWidget {
             onDismissed: (direction) async {
               final user = Provider.of<User?>(context, listen: false);
 
-              WriteBatch batch = FirebaseFirestore.instance.batch();
-
-              final remindersRef = FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(user?.uid)
-                  .collection('reminders')
-                  .doc(reminder.id);
-              final listRef = FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(user?.uid)
-                  .collection('todo_lists')
-                  .doc(reminder.list['id']);
-
-              batch.delete(remindersRef);
-              batch.update(
-                listRef,
-                {'reminder_count': todoList.reminderCount - 1},
-              );
-
               try {
-                await batch.commit();
-              } catch (e) {
-                print(e);
-              }
+                DatabaseService(uid: user!.uid)
+                    .deleteReminder(reminder, todoList);
+              } catch (e) {}
             },
             child: Card(
               child: ListTile(
