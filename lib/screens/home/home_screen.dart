@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:ios_reminders/models/category/category_collection.dart';
 import 'package:ios_reminders/screens/home/widgets/TodoLists.dart';
 import 'package:ios_reminders/screens/home/widgets/list_view_items.dart';
+import 'package:provider/provider.dart';
 
+import '../../config/custom_theme.dart';
 import 'widgets/footer.dart';
 import 'widgets/grid_view_items.dart';
 
@@ -24,6 +26,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
+          IconButton(
+            onPressed: () {
+              final customTheme =
+                  Provider.of<CustomTheme>(context, listen: false);
+              customTheme.toggleTheme();
+            },
+            icon: const Icon(Icons.wb_sunny),
+          ),
           IconButton(
             onPressed: () async {
               await FirebaseAuth.instance.signOut();

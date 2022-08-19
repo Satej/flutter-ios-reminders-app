@@ -39,6 +39,7 @@ class _ListViewItemsState extends State<ListViewItems> {
                         category.toggleCheckbox();
                       });
                     },
+                    tileColor: Theme.of(context).cardColor,
                     leading: Container(
                       decoration: BoxDecoration(
                         color: category.isChecked

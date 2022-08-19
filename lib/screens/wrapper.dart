@@ -4,6 +4,7 @@ import 'package:ios_reminders/models/reminders/reminder.dart';
 import 'package:ios_reminders/services/database_service.dart';
 import 'package:provider/provider.dart';
 
+import '../config/custom_theme.dart';
 import '../models/todo_list/todo_list.dart';
 import 'add_list/add_list_screen.dart';
 import 'add_reminder/add_reminder_screen.dart';
@@ -18,6 +19,7 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User?>(context);
+    final customTheme = Provider.of<CustomTheme>(context);
 
     return MultiProvider(
       providers: [
@@ -41,30 +43,9 @@ class Wrapper extends StatelessWidget {
           '/addReminder': (context) => const AddReminderScreen(),
         },
         home: user != null ? const HomeScreen() : const AuthenticateScreen(),
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.black,
-          appBarTheme: const AppBarTheme(color: Colors.black),
-          iconTheme: const IconThemeData(
-            color: Colors.white,
-          ),
-          accentColor: Colors.white,
-          brightness: Brightness.dark,
-          dividerColor: Colors.grey[600],
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              shape: const StadiumBorder(),
-            ),
-          ),
-          textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(
-              primary: Colors.blueAccent,
-              textStyle: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-          ),
-        ),
+        theme: customTheme.lightTheme,
+        darkTheme: customTheme.darkTheme,
+        themeMode: customTheme.currentTheme(),
       ),
     );
   }

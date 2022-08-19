@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ios_reminders/config/custom_theme.dart';
 import 'package:ios_reminders/screens/wrapper.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,9 +38,14 @@ class _AppState extends State<App> {
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
-          return StreamProvider<User?>.value(
-            value: FirebaseAuth.instance.authStateChanges(),
-            initialData: FirebaseAuth.instance.currentUser,
+          return MultiProvider(
+            providers: [
+              StreamProvider<User?>.value(
+                value: FirebaseAuth.instance.authStateChanges(),
+                initialData: FirebaseAuth.instance.currentUser,
+              ),
+              ChangeNotifierProvider(create: (context) => CustomTheme()),
+            ],
             child: const Wrapper(),
           );
         }
