@@ -5,6 +5,7 @@ import 'package:ios_reminders/screens/view_list/view_list_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/widgets/category_icon.dart';
+import '../../../common/widgets/dismissible_background.dart';
 import '../../../models/common/custom_color_collection.dart';
 import '../../../models/common/custom_icon_collection.dart';
 import '../../../models/todo_list/todo_list.dart';
@@ -72,14 +73,7 @@ class TodoLists extends StatelessWidget {
                   },
                   key: UniqueKey(),
                   direction: DismissDirection.endToStart,
-                  background: Container(
-                    alignment: AlignmentDirectional.centerEnd,
-                    color: Colors.red,
-                    child: const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                      child: Icon(Icons.delete),
-                    ),
-                  ),
+                  background: const DismissibleBackground(),
                   child: Card(
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero,
