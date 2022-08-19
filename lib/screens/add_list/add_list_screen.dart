@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ios_reminders/models/common/custom_color_collection.dart';
+import 'package:ios_reminders/services/database_service.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/common/custom_color.dart';
@@ -52,13 +52,8 @@ class _AddListScreenState extends State<AddListScreen> {
                     if (_textController.text.isNotEmpty) {
                       final user = Provider.of<User?>(context, listen: false);
 
-                      final todoListRef = FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(user?.uid)
-                          .collection('todo_lists')
-                          .doc();
                       final newTodoList = TodoList(
-                        id: todoListRef.id,
+                        id: null,
                         title: _textController.text,
                         icon: {
                           'id': _selectedIcon.id,
@@ -68,10 +63,10 @@ class _AddListScreenState extends State<AddListScreen> {
                       );
 
                       try {
-                        await todoListRef.set(newTodoList.toJson());
-                      } catch (e) {
-                        print(e);
-                      }
+                        DatabaseService(uid: user!.uid)
+                            .addTodoList(todoList: newTodoList);
+                      } catch (e) {}
+
                       //print('add to database');
                       //Provider.of<TodoListCollection>(context, listen: false).addTodoList(
                       //  TodoList(
