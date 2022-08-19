@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ios_reminders/models/common/helpers/helpers.dart' as helpers;
 import 'package:ios_reminders/screens/view_list/view_list_screen.dart';
 import 'package:ios_reminders/services/database_service.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +48,10 @@ class TodoLists extends StatelessWidget {
                     try {
                       await DatabaseService(uid: user!.uid)
                           .deleteTodoList(todoLists[index]);
-                    } catch (e) {}
+                      helpers.showSnackBar(context, 'List Deleted');
+                    } catch (e) {
+                      helpers.showSnackBar(context, 'Unable to delete List');
+                    }
                   },
                   key: UniqueKey(),
                   direction: DismissDirection.endToStart,

@@ -37,7 +37,10 @@ class ViewListScreen extends StatelessWidget {
               try {
                 DatabaseService(uid: user!.uid)
                     .deleteReminder(reminder, todoList);
-              } catch (e) {}
+                helpers.showSnackBar(context, 'Reminder Deleted');
+              } catch (e) {
+                helpers.showSnackBar(context, 'Unable To delete reminder');
+              }
             },
             child: Card(
               child: ListTile(

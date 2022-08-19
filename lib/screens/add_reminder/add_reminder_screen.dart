@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ios_reminders/models/category/category_collection.dart';
+import 'package:ios_reminders/models/common/helpers/helpers.dart' as helpers;
 import 'package:ios_reminders/models/todo_list/todo_list.dart';
 import 'package:ios_reminders/screens/add_reminder/select_reminder_category_screen.dart';
 import 'package:ios_reminders/screens/add_reminder/select_reminder_list_screen.dart';
@@ -67,32 +68,37 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
         title: const Text('New Reminder'),
         actions: [
           TextButton(
-            onPressed:
-                _title.isEmpty || _selectedDate == null || _selectedTime == null
-                    ? null
-                    : () async {
-                        print('add to database');
-                        _selectedList ??= _todoLists.first;
-                        final user = Provider.of<User?>(context, listen: false);
+            onPressed: _title.isEmpty ||
+                    _selectedDate == null ||
+                    _selectedTime == null
+                ? null
+                : () async {
+                    print('add to database');
+                    _selectedList ??= _todoLists.first;
+                    final user = Provider.of<User?>(context, listen: false);
 
-                        var newReminder = Reminder(
-                          id: null,
-                          title: _titleTextController.text,
-                          categoryId: _selectedCategory.id,
-                          dueDate: _selectedDate!.millisecondsSinceEpoch,
-                          dueTime: {
-                            'hour': _selectedTime!.hour,
-                            'minute': _selectedTime!.minute,
-                          },
-                          notes: _notesTextController.text,
-                          list: _selectedList!.toJson(),
-                        );
-
-                        try {
-                          DatabaseService(uid: user!.uid)
-                              .addReminder(reminder: newReminder);
-                        } catch (e) {}
+                    var newReminder = Reminder(
+                      id: null,
+                      title: _titleTextController.text,
+                      categoryId: _selectedCategory.id,
+                      dueDate: _selectedDate!.millisecondsSinceEpoch,
+                      dueTime: {
+                        'hour': _selectedTime!.hour,
+                        'minute': _selectedTime!.minute,
                       },
+                      notes: _notesTextController.text,
+                      list: _selectedList!.toJson(),
+                    );
+
+                    try {
+                      DatabaseService(uid: user!.uid)
+                          .addReminder(reminder: newReminder);
+                      Navigator.pop(context);
+                      helpers.showSnackBar(context, 'Reminder Added');
+                    } catch (e) {
+                      helpers.showSnackBar(context, 'Unable to add reminder');
+                    }
+                  },
             child: const Text(
               'Add',
               style: TextStyle(

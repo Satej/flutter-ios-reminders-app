@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ios_reminders/models/common/custom_color_collection.dart';
+import 'package:ios_reminders/models/common/helpers/helpers.dart' as helpers;
 import 'package:ios_reminders/services/database_service.dart';
 import 'package:provider/provider.dart';
 
@@ -65,7 +66,10 @@ class _AddListScreenState extends State<AddListScreen> {
                       try {
                         DatabaseService(uid: user!.uid)
                             .addTodoList(todoList: newTodoList);
-                      } catch (e) {}
+                        helpers.showSnackBar(context, 'List Added');
+                      } catch (e) {
+                        helpers.showSnackBar(context, 'Unable To add list');
+                      }
 
                       //print('add to database');
                       //Provider.of<TodoListCollection>(context, listen: false).addTodoList(
