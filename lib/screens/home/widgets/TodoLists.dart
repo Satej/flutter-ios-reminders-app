@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ios_reminders/screens/view_list/view_list_screen.dart';
+import 'package:ios_reminders/services/database_service.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/widgets/category_icon.dart';
@@ -44,32 +44,10 @@ class TodoLists extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Dismissible(
                   onDismissed: (direction) async {
-                    WriteBatch batch = FirebaseFirestore.instance.batch();
-
-                    final todoListRef = FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(user?.uid)
-                        .collection('todo_lists')
-                        .doc(todoLists[index].id);
-
-                    final reminderSnapshots = await FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(user?.uid)
-                        .collection('reminders')
-                        .where('list.id', isEqualTo: todoLists[index].id)
-                        .get();
-
-                    for (var reminder in reminderSnapshots.docs) {
-                      batch.delete(reminder.reference);
-                    }
-
-                    batch.delete(todoListRef);
-
                     try {
-                      await batch.commit();
-                    } catch (e) {
-                      print(e);
-                    }
+                      await DatabaseService(uid: user!.uid)
+                          .deleteTodoList(todoLists[index]);
+                    } catch (e) {}
                   },
                   key: UniqueKey(),
                   direction: DismissDirection.endToStart,
